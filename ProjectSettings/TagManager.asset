@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SelectionPrefab
+  - Placeholder
   layers:
   - Default
   - TransparentFX

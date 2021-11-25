@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6918678188084436229}
   - component: {fileID: 6793082517059677165}
   - component: {fileID: 8955821083157425148}
+  - component: {fileID: 4433397316043786106}
   m_Layer: 0
   m_Name: Cube3
   m_TagString: SelectionPrefab
@@ -94,7 +95,7 @@ Rigidbody:
   m_GameObject: {fileID: 8864466530514746576}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -115,3 +116,15 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5597002278806442958, guid: ba438da7f96d8b14496f52e9ab145e5d, type: 3}
+--- !u!114 &4433397316043786106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8864466530514746576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 955fca877426b3b458ef9977f96328d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
