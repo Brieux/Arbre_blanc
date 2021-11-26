@@ -11,18 +11,21 @@ public class OnClickPieces : MonoBehaviour
     public GameObject rightAnswer;
     private GameObject usingPlace = null;
     private bool passed = true;
+    private bool snappable = false;
+    private GameObject colldingGO;
 
 
     private void OnMouseDown()
     {
-        if (movable)
+        mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+        mOffset = gameObject.transform.position - GetMouseWorldPos();
+        movable = true;
+        if (colldingGO != null)
         {
-            mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-            mOffset = gameObject.transform.position - GetMouseWorldPos();
-        }
-        if (!movable)
-        {
-            Vector2 ScreenTouch = Camera.main.WorldToScreenPoint();      
+            colldingGO.SetActive(true);
+            GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            colldingGO = null;
         }
     }
 
@@ -41,6 +44,30 @@ public class OnClickPieces : MonoBehaviour
             transform.position = GetMouseWorldPos() + mOffset;
         }
     }
+
+    private void OnMouseUp()
+    {
+        if (snappable)
+        {
+            transform.position = colldingGO.transform.position;
+            transform.rotation = colldingGO.transform.rotation;
+            transform.localScale = colldingGO.transform.localScale;
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            usingPlace = colldingGO;
+            colldingGO.SetActive(false);
+            movable = false;
+            if (usingPlace == rightAnswer)
+            {
+                isOk = true;
+                foreach (OnClickPieces piece in GameObject.FindObjectsOfType<OnClickPieces>())
+                {
+                    passed = passed && piece.isOk;
+                }
+                GameManager.Instance.finished = passed;
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +83,9 @@ public class OnClickPieces : MonoBehaviour
     {
         if (other.gameObject.tag == "Placeholder" && movable)
         {
+            snappable = true;
+            colldingGO = other.gameObject;
+            /*
             transform.position = other.gameObject.transform.position;
             transform.rotation = other.gameObject.transform.rotation;
             transform.localScale = other.gameObject.transform.localScale;
@@ -73,6 +103,16 @@ public class OnClickPieces : MonoBehaviour
                 }
                 GameManager.Instance.finished = passed;
             }
+        }*/
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Placeholder" && movable)
+        {
+            snappable = false;
+            colldingGO = null;
+        }
+    }
+
 }
