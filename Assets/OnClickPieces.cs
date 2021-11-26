@@ -7,6 +7,11 @@ public class OnClickPieces : MonoBehaviour
     private Vector3 mOffset;
     private float mzCoord;
     private bool movable = true;
+    public bool isOk = false;
+    public GameObject rightAnswer;
+    private GameObject usingPlace = null;
+    private bool passed = true;
+
 
     private void OnMouseDown()
     {
@@ -14,14 +19,17 @@ public class OnClickPieces : MonoBehaviour
         {
             mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
             mOffset = gameObject.transform.position - GetMouseWorldPos();
-            mOffset.z = 0;
+        }
+        if (!movable)
+        {
+            Vector2 ScreenTouch = Camera.main.WorldToScreenPoint();      
         }
     }
 
     private Vector3 GetMouseWorldPos()
     {
         Vector3 mousePos = Input.mousePosition;
-        mousePos.z = 0.587f;
+        mousePos.z = mzCoord;
 
         return Camera.main.ScreenToWorldPoint(mousePos);
     }
@@ -46,14 +54,25 @@ public class OnClickPieces : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Placeholder")
+        if (other.gameObject.tag == "Placeholder" && movable)
         {
             transform.position = other.gameObject.transform.position;
             transform.rotation = other.gameObject.transform.rotation;
             transform.localScale = other.gameObject.transform.localScale;
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            usingPlace = other.gameObject;
+            other.gameObject.SetActive(false);
             movable = false;
+            if (usingPlace == rightAnswer)
+            {
+                isOk = true;
+                foreach (OnClickPieces piece in GameObject.FindObjectsOfType<OnClickPieces>())
+                {
+                    passed = passed && piece.isOk;
+                }
+                GameManager.Instance.finished = passed;
+            }
         }
     }
 }
