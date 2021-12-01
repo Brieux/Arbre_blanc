@@ -17,6 +17,8 @@ public class OnClickPieces : MonoBehaviour
 
     private void OnMouseDown()
     {
+        transform.rotation = rightAnswer.transform.rotation;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         mOffset = gameObject.transform.position - GetMouseWorldPos();
         movable = true;
