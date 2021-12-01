@@ -131,6 +131,13 @@ public class OnClickPieces : MonoBehaviour
             transform.rotation = originalRot; 
             transform.position = originalPos; 
             transform.localScale = originalScale;
+            if (colldingGO != null)
+            {
+                colldingGO.SetActive(true);
+                GetComponent<Rigidbody>().useGravity = true;
+                GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+                colldingGO = null;
+            }
         }
     }
 
