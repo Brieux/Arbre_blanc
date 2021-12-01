@@ -34,4 +34,12 @@ public class ButtonScript : MonoBehaviour
         }
         GameManager.Instance.SwitchCam();
     }
+
+    public void resetPieces()
+    {
+        foreach (OnClickPieces piece in GameObject.FindObjectsOfType<OnClickPieces>())
+        {
+            piece.resetPiece();
+        }
+    }
 }

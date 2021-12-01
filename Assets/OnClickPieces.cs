@@ -13,10 +13,13 @@ public class OnClickPieces : MonoBehaviour
     private bool passed = true;
     private bool snappable = false;
     private GameObject colldingGO;
-
+    public Vector3 originalPos;
+    public Vector3 originalScale;
+    public Quaternion originalRot;
 
     private void OnMouseDown()
     {
+        GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         transform.rotation = rightAnswer.transform.rotation;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
@@ -73,7 +76,9 @@ public class OnClickPieces : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        originalPos = transform.position;
+        originalRot = transform.rotation;
+        originalScale = transform.localScale;
     }
 
     // Update is called once per frame
@@ -114,6 +119,18 @@ public class OnClickPieces : MonoBehaviour
         {
             snappable = false;
             colldingGO = null;
+        }
+    }
+
+    public void resetPiece()
+    {
+        if (!isOk)
+        {
+            Debug.Log("Reseting pieces");
+            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            transform.rotation = originalRot; 
+            transform.position = originalPos; 
+            transform.localScale = originalScale;
         }
     }
 
