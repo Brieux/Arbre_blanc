@@ -17,6 +17,10 @@ public class OnClickPieces : MonoBehaviour
     public Vector3 originalScale;
     public Quaternion originalRot;
 
+    private void Awake()
+    {
+        Vibration.Init();
+    }
     private void OnMouseDown()
     {
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
@@ -65,6 +69,7 @@ public class OnClickPieces : MonoBehaviour
             if (usingPlace == rightAnswer)
             {
                 isOk = true;
+                Vibration.VibratePop();
                 foreach (OnClickPieces piece in GameObject.FindObjectsOfType<OnClickPieces>())
                 {
                     passed = passed && piece.isOk;

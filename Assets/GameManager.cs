@@ -7,11 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool finished;
+    public int gameState;
     [SerializeField] CinemachineVirtualCamera VCWest;
     [SerializeField] CinemachineVirtualCamera VCEast;
     [SerializeField] CinemachineVirtualCamera VCSouth;
     [SerializeField] CinemachineVirtualCamera VCNorth;
     public int numCam = 1;
+    public List<GameObject> listPlaceHold;
+    public List<GameObject> listJig;
 
     private void Awake()
     {
@@ -20,15 +23,94 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        gameMoment();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (finished && gameState == 1)
+        {
+            gameState = 2;
+            gameMoment();
+            finished = false;
+        }
+        if (finished && gameState == 2)
+        {
+            gameState = 3;
+            gameMoment();
+            finished = false;
+        }
 
 
+    }
+    public void gameMoment()
+    {
+        switch (gameState)
+        {
+            case 1:
+                foreach (GameObject placeHolder in listPlaceHold)
+                {
+                    placeHolder.SetActive(false);
+                    
+                }
+                listPlaceHold[10].SetActive(true);
 
+                foreach (GameObject jigsawPiece in listJig)
+                {
+                    jigsawPiece.SetActive(false);
+                }
+                listJig[10].SetActive(true);
+                break;
+
+            case 2:
+                foreach (GameObject jigsawPiece in listJig)
+                {
+                    jigsawPiece.SetActive(false);
+                }
+                listJig[10].SetActive(true);
+                listJig[7].SetActive(true);
+                listJig[0].SetActive(true);
+                listJig[2].SetActive(true);
+
+                foreach (GameObject placeHolder in listPlaceHold)
+                {
+                    placeHolder.SetActive(false);
+
+                }
+                listPlaceHold[7].SetActive(true);
+                listPlaceHold[0].SetActive(true);
+                listPlaceHold[2].SetActive(true);
+
+                foreach (GameObject jigsawPiece in listJig)
+                {
+                    jigsawPiece.SetActive(false);
+                }
+                listJig[10].SetActive(true);
+                listJig[7].SetActive(true);
+                listJig[0].SetActive(true);
+                listJig[2].SetActive(true);
+                break;
+
+            case 3:
+                foreach (GameObject placeHolder in listPlaceHold)
+                {
+                    placeHolder.SetActive(true);
+
+                }
+                listPlaceHold[7].SetActive(false);
+                listPlaceHold[10].SetActive(false);
+                listPlaceHold[0].SetActive(false);
+                listPlaceHold[2].SetActive(false);
+                foreach (GameObject jigsawPiece in listJig)
+                {
+                    jigsawPiece.SetActive(true);
+                }
+                break;
+
+            default:
+                break;
+        }
     }
     public void SwitchCam()
     {
