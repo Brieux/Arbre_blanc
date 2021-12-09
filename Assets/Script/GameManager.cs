@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int numCam = 1;
     public List<GameObject> listPlaceHold;
     public List<GameObject> listJig;
+    public GameObject finalAbre;
 
     private void Awake()
     {
@@ -40,6 +41,12 @@ public class GameManager : MonoBehaviour
             gameState = 3;
             gameMoment();
             finished = false;
+        }
+        if(finished && gameState == 3)
+        {
+            finished = false;
+            finalAbre.SetActive(true);
+            finalAbre.GetComponent<Animator>().SetTrigger("Finished");
         }
 
 
