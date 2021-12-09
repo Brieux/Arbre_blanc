@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera VCEast;
     [SerializeField] CinemachineVirtualCamera VCSouth;
     [SerializeField] CinemachineVirtualCamera VCNorth;
+    [SerializeField] CinemachineVirtualCamera VCRotate;
     public int numCam = 1;
     public List<GameObject> listPlaceHold;
     public List<GameObject> listJig;
@@ -45,13 +46,27 @@ public class GameManager : MonoBehaviour
             gameMoment();
             finished = false;
         }
-        if(finished && gameState == 3)
+        if (finished && gameState == 3)
+        {
+            gameState = 4;
+            gameMoment();
+            finished = false;
+        }
+        if (finished && gameState == 4)
+        {
+            gameState = 5;
+            gameMoment();
+            finished = false;
+        }
+        if (finished && gameState == 5)
         {
             finished = false;
             TransparantTree.SetActive(false);
             JigsawTree.SetActive(false);
             finalAbre.SetActive(true);
             finalAbre.GetComponent<Animator>().SetTrigger("Finished");
+            numCam = 5;
+            SwitchCam();
         }
 
 
@@ -105,19 +120,40 @@ public class GameManager : MonoBehaviour
                 break;
 
             case 3:
-                foreach (GameObject placeHolder in listPlaceHold)
-                {
-                    placeHolder.SetActive(true);
+                listPlaceHold[1].SetActive(true);
+                listPlaceHold[3].SetActive(true);
+                listPlaceHold[4].SetActive(true);
+                listPlaceHold[6].SetActive(true);
+                listPlaceHold[8].SetActive(true);
+                listJig[1].SetActive(true);
+                listJig[3].SetActive(true);
+                listJig[4].SetActive(true);
+                listJig[6].SetActive(true);
+                listJig[8].SetActive(true);
+                break;
+            case 4:
+                listPlaceHold[5].SetActive(true);
+                listPlaceHold[9].SetActive(true);
+                listPlaceHold[11].SetActive(true);
+                listPlaceHold[12].SetActive(true);
+                listPlaceHold[13].SetActive(true);
+                listJig[5].SetActive(true);
+                listJig[9].SetActive(true);
+                listJig[11].SetActive(true);
+                listJig[12].SetActive(true);
+                listJig[13].SetActive(true);
+                break;
+            case 5:
+                listPlaceHold[14].SetActive(true);
+                listPlaceHold[15].SetActive(true);
+                listPlaceHold[16].SetActive(true);
+                listPlaceHold[17].SetActive(true);
 
-                }
-                listPlaceHold[7].SetActive(false);
-                listPlaceHold[10].SetActive(false);
-                listPlaceHold[0].SetActive(false);
-                listPlaceHold[2].SetActive(false);
-                foreach (GameObject jigsawPiece in listJig)
-                {
-                    jigsawPiece.SetActive(true);
-                }
+                listJig[14].SetActive(true);
+                listJig[15].SetActive(true);
+                listJig[16].SetActive(true);
+                listJig[17].SetActive(true);
+
                 break;
 
             default:
@@ -133,6 +169,7 @@ public class GameManager : MonoBehaviour
                 VCSouth.enabled = false;
                 VCEast.enabled = false;
                 VCNorth.enabled = false;
+                VCRotate.enabled = false;
                 break;
 
             case 2:
@@ -140,6 +177,7 @@ public class GameManager : MonoBehaviour
                 VCSouth.enabled = true;
                 VCEast.enabled = false;
                 VCNorth.enabled = false;
+                VCRotate.enabled = false;
                 break;
 
             case 3:
@@ -147,6 +185,7 @@ public class GameManager : MonoBehaviour
                 VCSouth.enabled = false;
                 VCEast.enabled = true;
                 VCNorth.enabled = false;
+                VCRotate.enabled = false;
                 break;
 
             case 4:
@@ -154,6 +193,15 @@ public class GameManager : MonoBehaviour
                 VCSouth.enabled = false;
                 VCEast.enabled = false;
                 VCNorth.enabled = true;
+                VCRotate.enabled = false;
+                break;
+
+            case 5:
+                VCWest.enabled = false;
+                VCSouth.enabled = false;
+                VCEast.enabled = false;
+                VCNorth.enabled = false;
+                VCRotate.enabled = true;
                 break;
 
             default:
@@ -161,6 +209,7 @@ public class GameManager : MonoBehaviour
                 VCSouth.enabled = true;
                 VCEast.enabled = false;
                 VCNorth.enabled = false;
+                VCRotate.enabled = false;
                 break;
         }
     }

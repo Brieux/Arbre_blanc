@@ -23,18 +23,26 @@ public class OnClickPieces : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        if (usingPlace != rightAnswer)
+        {
         GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         transform.rotation = rightAnswer.transform.rotation;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         mOffset = gameObject.transform.position - GetMouseWorldPos();
         movable = true;
+        if (usingPlace == rightAnswer)
+        {
+            movable = false;
+        }
         if (colldingGO != null)
         {
             colldingGO.SetActive(true);
             GetComponent<Rigidbody>().useGravity = true;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             colldingGO = null;
+        }
+            
         }
     }
 
@@ -70,6 +78,7 @@ public class OnClickPieces : MonoBehaviour
             {
                 isOk = true;
                 Vibration.VibratePop();
+                movable = false;
                 foreach (OnClickPieces piece in GameObject.FindObjectsOfType<OnClickPieces>())
                 {
                     passed = passed && piece.isOk;
