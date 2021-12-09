@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> listPlaceHold;
     public List<GameObject> listJig;
     public GameObject finalAbre;
+    public GameObject TransparantTree;
+    public GameObject JigsawTree;
+
 
     private void Awake()
     {
@@ -45,6 +48,8 @@ public class GameManager : MonoBehaviour
         if(finished && gameState == 3)
         {
             finished = false;
+            TransparantTree.SetActive(false);
+            JigsawTree.SetActive(false);
             finalAbre.SetActive(true);
             finalAbre.GetComponent<Animator>().SetTrigger("Finished");
         }
