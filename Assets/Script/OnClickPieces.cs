@@ -85,6 +85,10 @@ public class OnClickPieces : MonoBehaviour
                 }
                 GameManager.Instance.finished = passed;
             }
+            else
+            {
+                Vibration.VibratePeek();
+            }
         }
     }
     // Start is called before the first frame update
