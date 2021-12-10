@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public GameObject finalAbre;
     public GameObject TransparantTree;
     public GameObject JigsawTree;
+    public List<GameObject> ListUI;
 
 
     private void Awake()
@@ -31,9 +32,23 @@ public class GameManager : MonoBehaviour
         gameMoment();
     }
 
+    public void LetsGo()
+    {
+        if (gameState == 6)
+        {
+            
+                gameState = 1;
+                numCam = 4;
+                gameMoment();
+                SwitchCam();
+                ListUI[1].SetActive(false);
+                ListUI[0].SetActive(true);
+        }
+    }
     // Update is called once per frame
     void Update()
     {
+    
         if (finished && gameState == 1)
         {
             gameState = 2;

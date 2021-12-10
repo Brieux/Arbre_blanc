@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
+    public bool openMenuBool = false;
+    public GameObject Glisseur;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,5 +43,29 @@ public class ButtonScript : MonoBehaviour
         {
             piece.resetPiece();
         }
+    }
+    public void launchGame()
+    {
+        GameManager.Instance.LetsGo();
+    }
+    public void openMenu()
+    {
+        if (!openMenuBool)
+        {
+            Glisseur.GetComponent<Animator>().SetTrigger("OpenMenuAnim");
+            openMenuBool = true;
+        }
+        else
+        {
+            Glisseur.GetComponent<Animator>().SetTrigger("CloseMenu");
+
+            openMenuBool = false;
+        }
+    }
+
+    public void quitthegame()
+    {
+        Debug.Log("Salut");
+        Application.Quit();
     }
 }
