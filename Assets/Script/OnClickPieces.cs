@@ -16,6 +16,7 @@ public class OnClickPieces : MonoBehaviour
     public Vector3 originalPos;
     public Vector3 originalScale;
     public Quaternion originalRot;
+    public Camera cam;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class OnClickPieces : MonoBehaviour
         mzCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         mOffset = gameObject.transform.position - GetMouseWorldPos();
         movable = true;
+
         if (usingPlace == rightAnswer)
         {
             movable = false;
@@ -58,7 +60,14 @@ public class OnClickPieces : MonoBehaviour
     {
         if (movable)
         {
-            transform.position = GetMouseWorldPos() + mOffset;
+
+            Ray ray = cam.ScreenPointToRay(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 1000))
+            {
+                transform.position = hit.point;
+            }
         }
     }
 
